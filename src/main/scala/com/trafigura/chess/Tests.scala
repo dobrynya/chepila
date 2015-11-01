@@ -1,15 +1,31 @@
 package com.trafigura.chess
 
-object PrintLayoutsSize extends App {
-
-  val pieces = List(King, King, Queen, Bishop, Roak, Knight)
-  val chessLayouts = new ChessLayout(9, 6, pieces :_*)
-
-  println("Found %s possible layouts for deck 9x6 of %s".format(
-    chessLayouts.findLayouts.size, pieces))
+object PrintLayoutsByAnotherVariant extends App {
+  val chessVariants = new ChessVariants(3, 3, King, King, Roak)
+  chessVariants.printLayouts
 }
 
+object TestPieces extends App {
+  assert(King((2, 2), (1, 1)))
+  assert(King((2, 2), (2, 1)))
+  assert(King((2, 2), (3, 1)))
+  assert(King((2, 2), (1, 2)))
+  assert(King((2, 2), 1 -> 3))
+  assert(King(2 -> 2, 3 -> 2))
+  assert(King(2 -> 2, 3 -> 3))
+  assert(King(2 -> 2, 2 -> 3))
+  assert(!King(2 -> 2, 2 -> 5))
+  assert(!King(1 -> 1, 3 -> 1))
+  assert(!King(1 -> 1, 1 -> 3))
 
-object PrintLayouts extends App {
-  new ChessLayout(9, 6, King, King, Queen, Bishop, Roak, Knight).printLayouts
+  assert(Bishop(1 -> 1, 2 -> 2))
+  assert(Bishop(1 -> 1, 3 -> 3))
+  assert(!Bishop(1 -> 1, 2 -> 1))
+  assert(!Bishop(1 -> 1, 3 -> 1))
+  assert(!Bishop(1 -> 1, 2 -> 1))
+  assert(!Bishop(1 -> 1, 1 -> 2))
+  assert(!Bishop(1 -> 1, 1 -> 3))
+  assert(!Bishop(1 -> 1, 3 -> 2))
+
+  assert(Set(PlacedPiece2(King, (1, 2)), PlacedPiece2(King, (3, 1))) == Set(PlacedPiece2(King, (1, 2)), PlacedPiece2(King, (3, 1))))
 }
