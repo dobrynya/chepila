@@ -29,7 +29,7 @@ class ChessLayouts(trace: Boolean, m: Int, n: Int, pieces: Piece*) {
       traceInfo("Placing %s on %s already placed %s", remaining, deck, placed)
       remaining match {
         case Nil =>
-          println("Found layout %s" format placed)
+          traceInfo("Found layout %s", placed)
           placed :: acc
         case piece :: tail =>
           val free = deck.filter(c => placed.forall(nonThreatening(piece, c)))
