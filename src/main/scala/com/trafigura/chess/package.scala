@@ -3,7 +3,7 @@ package com.trafigura
 import math._
 
 package object chess {
-  type Deck = List[(Int, Int)]
+  type Deck = Set[(Int, Int)]
   type Layout = Map[(Int, Int), Piece]
   type Piece = ((Int, Int), (Int, Int)) => Boolean
 

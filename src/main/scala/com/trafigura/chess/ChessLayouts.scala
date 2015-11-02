@@ -15,7 +15,8 @@ class ChessLayouts(trace: Boolean, m: Int, n: Int, pieces: Piece*) {
    * Searches for all available layouts.
    * @return layouts
    */
-  def findLayouts: List[Layout] = {
+  def findLayouts: Set[Layout] = {
+    var count = 0L
 
     /**
      * Places remaining pieces on the deck.
@@ -25,26 +26,22 @@ class ChessLayouts(trace: Boolean, m: Int, n: Int, pieces: Piece*) {
      * @param acc collected layouts
      * @return layouts
      */
-    def placePieces(remaining: List[Piece], placed: Layout, deck: Deck, acc: List[Layout]): List[Layout] = {
+    def placePieces(remaining: List[Piece], placed: Layout, deck: Deck, acc: Set[Layout]): Set[Layout] = {
       traceInfo("Placing %s on %s already placed %s", remaining, deck, placed)
       remaining match {
         case Nil =>
           traceInfo("Found layout %s", placed)
-          placed :: acc
+          acc + placed
         case piece :: tail =>
           val free = deck.filter(c => placed.forall(nonThreatening(piece, c)))
-          if (free.isEmpty) {
-            traceInfo("There is no place for %s", piece)
-            acc
-          } else {
-            traceInfo("Available places for %s are %s", piece, free)
-            free.flatMap {c => placePieces(tail, placed + (c -> piece), deck.filterNot(c == _), acc)}
-          }
+          if (free.isEmpty) acc
+          else
+            free.flatMap {c => placePieces(tail, placed + (c -> piece), free - c, acc)}
       }
     }
 
-    val emptyDeck = (for (i <- 1 to m; j <- 1 to n) yield (i, j)).toList
-    placePieces(pieces.toList, Map.empty, emptyDeck, Nil).distinct
+    val emptyDeck = (for (i <- 1 to m; j <- 1 to n) yield (i, j)).toSet
+    placePieces(pieces.toList, Map.empty, emptyDeck, Set.empty)
   }
 
   def printLayouts: Unit = {

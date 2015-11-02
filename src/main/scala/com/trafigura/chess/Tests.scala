@@ -1,9 +1,17 @@
 package com.trafigura.chess
 
 object PrintLayoutsForTestCase extends App {
-  val pieces = List(King, King, Queen, Roak, Knight)
+  val pieces = List(King, King, Queen, Bishop, Roak, Knight)
   val chessVariants = new ChessLayouts(false, 9, 6, pieces :_*)
   println(s"Test case is to find all layouts for $pieces on 9x6 deck")
+  private val layouts = chessVariants.findLayouts.size
+  println(s"Result is $layouts")
+}
+
+object PrintLittle extends App {
+  val pieces = List(King, King, Roak)
+  val chessVariants = new ChessLayouts(false, 3, 3, pieces :_*)
+  println(s"Test case is to find all layouts for $pieces on 3x3 deck")
   private val layouts = chessVariants.findLayouts.size
   println(s"Result is $layouts")
 }
