@@ -16,7 +16,6 @@ class ChessLayouts(trace: Boolean, m: Int, n: Int, pieces: Piece*) {
    * @return layouts
    */
   def findLayouts: Set[Layout] = {
-    var count = 0L
 
     /**
      * Places remaining pieces on the deck.
