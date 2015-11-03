@@ -13,14 +13,14 @@ package object chess {
     override def toString() = "Bishop"
   }
 
-  case object Roak extends Piece {
+  case object Rook extends Piece {
     def apply(c1: (Int, Int), c2: (Int, Int)) = c1._1 == c2._1 || c1._2 == c2._2
 
-    override def toString() = "Roak"
+    override def toString() = "Rook"
   }
 
   case object Queen extends Piece {
-    def apply(c1: (Int, Int), c2: (Int, Int)) = Bishop(c1, c2) || Roak(c1, c2)
+    def apply(c1: (Int, Int), c2: (Int, Int)) = Bishop(c1, c2) || Rook(c1, c2)
 
     override def toString() = "Queen"
   }
@@ -35,7 +35,7 @@ package object chess {
     def apply(c1: (Int, Int), c2: (Int, Int)) = {
       val dx = abs(c1._1 - c2._1)
       val dy = abs(c1._2 - c2._2)
-      (dx == 3 && dy == 1) || (dx == 1 && dy == 3)
+      (dx == 2 && dy == 1) || (dx == 1 && dy == 2)
     }
 
     override def toString() = "Knight"
